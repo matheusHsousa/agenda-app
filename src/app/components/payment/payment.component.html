@@ -1,0 +1,188 @@
+<div class="checkout-page">
+  <div class="page-container">
+    <div class="arrow">
+      <button mat-icon-button (click)="goBack()" *ngIf="showPaymentMethod || showPaymentForm" class="back-arrow">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </div>
+
+    <h1 *ngIf="!showPaymentMethod && !showPaymentForm">Escolha o Melhor Plano</h1>
+    <h1 *ngIf="showPaymentMethod && !showPaymentForm">Configuração do Pagamento</h1>
+    <h1 *ngIf="showPaymentForm">Pagamento via {{ paymentMethod === 'pix' ? 'Pix' : paymentMethod === 'card' ? 'Cartão' :
+      'Boleto' }}</h1>
+
+    <div class="width-50">
+      <!-- Escolha do Plano -->
+      <div *ngIf="!showPaymentMethod && !showPaymentForm">
+        <section class="plans-container">
+          <!-- Plano de Agendamentos -->
+          <div class="plan-card" (click)="addToCart('Plano de Agendamentos', 49.90, 'mensal')">
+            <div>
+              <div>Plano de Agendamentos</div>
+              <div>Ideal para gerenciar sua agenda com eficiência</div>
+            </div>
+            <div class="card-content-align">
+              <ul class="plan-features">
+                <li><mat-icon>check</mat-icon> Agendamentos ilimitados</li>
+                <li><mat-icon>check</mat-icon> Suporte via chat e e-mail</li>
+                <li><mat-icon>check</mat-icon> Relatórios detalhados</li>
+              </ul>
+              <div class="plan-price">
+                <p><strong>R$ 49,90</strong>/mês</p>
+              </div>
+            </div>
+            <div>
+              <button class="primary-button">Selecionar</button>
+            </div>
+          </div>
+
+          <!-- Plano Anual -->
+          <div class="plan-card highlight" (click)="addToCart('Plano Anual', 499.90, 'anual')">
+            <span class="tag">Mais Popular</span>
+            <div>
+              <div>Plano Anual</div>
+              <div>Perfeito para economizar no longo prazo</div>
+            </div>
+            <div>
+              <ul class="plan-features">
+                <li><mat-icon>check</mat-icon> Agendamentos ilimitados</li>
+                <li><mat-icon>check</mat-icon> Suporte prioritário</li>
+                <li><mat-icon>check</mat-icon> Relatórios avançados</li>
+              </ul>
+              <div class="plan-price">
+                <p><strong>R$ 499,90</strong>/ano</p>
+              </div>
+            </div>
+            <div>
+              <button class="primary-button">Selecionar</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Seleção de Forma de Pagamento e Conteúdo -->
+      <div *ngIf="showPaymentMethod" class="payment-container">
+        <!-- Menu Lateral -->
+        <div class="payment-options">
+          <div *ngFor="let method of paymentMethods" class="payment-card"
+            [class.selected]="paymentMethod === method.value" (click)="selectPaymentMethod(method.value)">
+            <div class="mat-content-metodo">
+              <img [src]="method.image" alt="{{ method.label }}" style="mix-blend-mode: multiply;" />
+              <p>{{ method.label }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-details" *ngIf="paymentMethod">
+          <div *ngIf="paymentMethod === 'pix' && cart.qrCodeBase64" class="pix-details">
+            <h3>Pagamento com Pix</h3>
+            <img [src]="'data:image/png;base64,' + cart.qrCodeBase64" alt="QR Code Pix" class="qr-code" />
+            <p>Chave Pix: <strong>{{ cart.qrCode }}</strong></p>
+            
+            <div class="status-check">
+              <button class="primary-button" (click)="confirmPixPayment()">Já Paguei</button>
+              <button class="secondary-button" (click)="copyToClipboard(cart.qrCode)">Copiar Chave Pix</button>
+              <p *ngIf="interval">Estamos verificando automaticamente o pagamento...</p>
+            </div>
+          </div>          
+
+          <div *ngIf="paymentMethod === 'card'">
+            <div>
+              <h3>Informações do Cartão</h3>
+            </div>
+            <div>
+              <div class="payment-details" *ngIf="paymentMethod === 'card'">
+                <form class="form" (ngSubmit)="pay(form)" #form="ngForm">
+                  <div class="form-section">
+                    <!-- Nome do Titular -->
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>Nome do Titular</mat-label>
+                      <input matInput id="first_name" [(ngModel)]="paymentData.payer.first_name" name="first_name"
+                        required #firstName="ngModel" />
+                      <mat-error *ngIf="firstName.invalid && firstName.touched">Nome do titular é
+                        obrigatório.</mat-error>
+                    </mat-form-field>
+
+                    <!-- Sobrenome do Titular -->
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>Sobrenome do Titular</mat-label>
+                      <input matInput id="last_name" [(ngModel)]="paymentData.payer.last_name" name="last_name" required
+                        #lastName="ngModel" />
+                      <mat-error *ngIf="lastName.invalid && lastName.touched">Sobrenome do titular é
+                        obrigatório.</mat-error>
+                    </mat-form-field>
+
+                    <!-- E-mail -->
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>E-mail</mat-label>
+                      <input matInput id="email" type="email" [(ngModel)]="paymentData.payer.email" name="email"
+                        required #email="ngModel" [ngClass]="{'invalid': email.invalid && email.touched}"
+                        pattern=".+@.+\..+" />
+                      <mat-error *ngIf="email.invalid && email.touched">Por favor, insira um e-mail válido.</mat-error>
+                    </mat-form-field>
+
+                    <!-- CPF -->
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>CPF</mat-label>
+                      <input matInput id="cpf" [(ngModel)]="paymentData.payer.identification.number" name="cpf" required
+                        [ngClass]="{ 'invalid': cpf.invalid && (cpf.dirty || cpf.touched) }" #cpf="ngModel"
+                        (input)="onCpfInputChange()" (blur)="onCpfBlur()" />
+                      <mat-error *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)">
+                        Por favor, insira um CPF válido.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-section">
+                    <!-- Nome no Cartão -->
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>Nome no Cartão</mat-label>
+                      <input matInput id="holder_name" [(ngModel)]="paymentData.card.holder_name" name="holder_name"
+                        required #holderName="ngModel" />
+                      <mat-error *ngIf="holderName.invalid && holderName.touched">Nome no cartão é
+                        obrigatório.</mat-error>
+                    </mat-form-field>
+
+                    <!-- Número do Cartão -->
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>Número do Cartão</mat-label>
+                      <input matInput id="card_number" [(ngModel)]="paymentData.card.number" name="card_number"
+                        mask="0000 0000 0000 0000" (blur)="onCardNumberBlur($event)" required #cardNumber="ngModel" />
+                      <mat-error *ngIf="cardNumber.invalid && cardNumber.touched">Número do cartão é
+                        obrigatório.</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>Data de Expiração (MM/AA)</mat-label>
+                      <input matInput id="expiration" [(ngModel)]="paymentData.card.expiration" name="expiration"
+                        (ngModelChange)="formatExpiration($event)" required maxlength="5" placeholder="MM/AA"
+                        #expiration="ngModel" />
+                      <mat-error *ngIf="expiration.invalid && expiration.touched">Data de expiração é obrigatória e deve
+                        estar no formato MM/AA.</mat-error>
+                    </mat-form-field>
+
+                    <!-- CVV -->
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>CVV</mat-label>
+                      <input matInput id="security_code" type="text" [(ngModel)]="paymentData.card.security_code"
+                        name="security_code" maxLength="3" required #securityCode="ngModel" />
+                      <mat-error *ngIf="securityCode.invalid && securityCode.touched">CVV é obrigatório.</mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="container-button">
+                    <button mat-raised-button class="primary-button" type="submit"
+                      [disabled]="!form.valid">Pagar</button>
+                  </div>
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

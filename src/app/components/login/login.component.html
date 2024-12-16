@@ -1,0 +1,10 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Bem-vindo!</h2>
+    <p>Faça login para acessar sua conta</p>
+    <button (click)="loginWithGoogle()" [disabled]="loading" class="google-login-btn">
+      <img src="./../../assets/google.webp" alt="Google Icon" /> Login com Google
+    </button>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>
+</div>

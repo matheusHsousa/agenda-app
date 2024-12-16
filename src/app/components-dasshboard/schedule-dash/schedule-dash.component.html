@@ -1,0 +1,48 @@
+<div class="agenda-container">
+  <div class="filter-container">
+    <div class="filter-employee">
+      <label for="employee-filter">Filtrar por Funcionário:</label>
+      <select id="employee-filter" (change)="onEmployeeFilterChange($event)">
+        <option value="all">Todos</option>
+        <option *ngFor="let employee of employees" [value]="employee.id">
+          {{ employee.name }}
+        </option>
+      </select>
+    </div>
+  
+    <div class="week-navigation">
+      <button (click)="prevWeek()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <span>{{ currentWeekRange }}</span>
+      <button (click)="nextWeek()">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    
+  
+    <div class="calendar-picker">
+      <label for="date-picker">Escolher Data:</label>
+      <input type="date" id="date-picker" (change)="onDateChange($event)" />
+    </div>
+  </div>
+  
+  <table class="agenda-table">
+    <thead>
+      <tr>
+        <th>Horários</th>
+        <th *ngFor="let day of weekDays">{{ day }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let timeSlot of timeSlots">
+        <td class="time-slot">{{ timeSlot }}</td>
+        <td *ngFor="let day of weekDays" class="agenda-cell" (click)="openSlot(day, timeSlot)">
+          <div *ngIf="hasAppointment(day, timeSlot)" class="appointment">
+            {{ getAppointmentSummary(day, timeSlot) }}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

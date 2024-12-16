@@ -1,0 +1,22 @@
+<div class="container mt-4">
+    <h1>Configurações de Cores</h1>
+    <form>
+        <div class="row">
+            <!-- Loop pelas chaves relevantes para exibir os inputs -->
+            <div class="col-md-6" *ngFor="let key of colorKeys">
+                <div class="form-group">
+                    <label [for]="key">{{ key | titlecase }}</label>
+                    <input type="color" class="form-control form-control-color" [id]="key" [(ngModel)]="colors[key]"
+                        [name]="key" />
+                </div>
+            </div>
+        </div>
+        <!-- Botões para salvar e remover cores -->
+        <button type="button" class="btn btn-primary mt-3" (click)="saveColors()">
+            Salvar Cores
+        </button>
+        <button type="button" class="btn btn-danger mt-3" (click)="deleteColors()">
+            Remover Cores
+        </button>
+    </form>
+</div>

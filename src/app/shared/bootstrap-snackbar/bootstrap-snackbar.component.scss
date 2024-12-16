@@ -1,0 +1,24 @@
+/* Exemplo de estilos básicos para o layout */
+.banana {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1050;
+  width: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.banana.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.toast-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

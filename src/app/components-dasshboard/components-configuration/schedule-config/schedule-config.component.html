@@ -1,0 +1,36 @@
+<div class="schedule-config">
+  <h2>Configuração de Horários</h2>
+
+  <div *ngIf="isLoading" class="text-center">Carregando horários...</div>
+
+  <table *ngIf="!isLoading" class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th>Dia da Semana</th>
+        <th>Hora de Início</th>
+        <th>Hora de Término</th>
+        <th>Ativo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hour of workingHours">
+        <td>{{ hour.day_of_week }}</td>
+        <td>
+          <input type="time" class="form-control" [(ngModel)]="hour.start_time" [disabled]="!hour.isActive" />
+        </td>
+        <td>
+          <input type="time" class="form-control" [(ngModel)]="hour.end_time" [disabled]="!hour.isActive" />
+        </td>
+        <td>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="hour.isActive"
+              id="switch-{{ hour.day_of_week }}" />
+            <label class="form-check-label" [for]="'switch-' + hour.day_of_week">{{ hour.isActive ? 'Ativo' : 'Inativo'
+              }}</label>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-primary btn-block" (click)="saveWorkingHours()">Salvar Alterações</button>
+</div>

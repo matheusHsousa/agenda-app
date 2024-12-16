@@ -1,0 +1,34 @@
+<div class="main-container">
+    <div class="tabs-container">
+        <!-- Abas de navegação -->
+        <button class="tab" *ngFor="let tab of tabs" [class.active]="activeTab === tab.key"
+            (click)="changeTab(tab.key)">
+            {{ tab.label }}
+        </button>
+    </div>
+
+    <div class="tab-content">
+        <!-- Conteúdo da aba "Cores" -->
+        <div *ngIf="activeTab === 'cores'">
+            <h2>Configuração de Cores</h2>
+            <app-company-colors></app-company-colors>
+        </div>
+
+        <!-- Conteúdo da aba "Agenda" -->
+        <div *ngIf="activeTab === 'agenda'">
+            <h2>Configuração da Agenda</h2>
+            <app-schedule-config></app-schedule-config>
+        </div>
+
+        <div *ngIf="activeTab === 'feriados'">
+            <h2>Configuração dos Feriados</h2>
+            <app-holidays></app-holidays>
+        </div>
+
+        <!-- Conteúdo da aba "Usuários" -->
+        <div *ngIf="activeTab === 'usuarios'">
+            <h2>Configuração de Folgas</h2>
+            <app-day-off></app-day-off>
+        </div>
+    </div>
+</div>

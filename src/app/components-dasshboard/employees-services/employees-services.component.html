@@ -1,0 +1,150 @@
+<div class="main-container">
+    <!-- Navegação entre abas -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'employees'" (click)="activeTab = 'employees'">
+                Funcionários
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab === 'services'" (click)="activeTab = 'services'">
+                Serviços
+            </button>
+        </li>
+    </ul>
+
+    <!-- Conteúdo das abas -->
+    <div class="tab-content">
+        <!-- Aba de Funcionários -->
+        <div *ngIf="activeTab === 'employees'" class="tab-pane fade show active">
+            <h2>Funcionários</h2>
+            <div class="form-edit-container">
+                <!-- Formulário de Funcionários -->
+                <form (ngSubmit)="addOrUpdateEmployee()" class="form-container">
+                    <div class="form-group">
+                        <label for="employeeName">Nome:</label>
+                        <input type="text" id="employeeName" [(ngModel)]="employeeForm.name" name="employeeName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeEmail">Email:</label>
+                        <input type="email" id="employeeEmail" [(ngModel)]="employeeForm.email" name="employeeEmail" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="employeePosition">Cargo:</label>
+                        <input type="text" id="employeePosition" [(ngModel)]="employeeForm.position" name="employeePosition" required />
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" *ngIf="!editingEmployee">Adicionar</button>
+                        <div *ngIf="editingEmployee" class="edit-actions">
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                            <button type="button" class="btn btn-secondary" (click)="cancelEditingEmployee()">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Tabela de Funcionários -->
+                <div class="employee-list-container">
+                    <table class="table" *ngIf="employees.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Cargo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let employee of employees">
+                                <td>{{ employee.name }}</td>
+                                <td>{{ employee.email }}</td>
+                                <td>{{ employee.position }}</td>
+                                <td>
+                                    <button class="btn btn-warning" (click)="editEmployee(employee)">Editar</button>
+                                    <button class="btn btn-danger" (click)="deleteEmployee(employee.id)">Remover</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p *ngIf="employees.length === 0" class="no-data-message">
+                        Nenhum funcionário cadastrado.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aba de Serviços -->
+        <div *ngIf="activeTab === 'services'" class="tab-pane fade show active">
+            <h2>Serviços</h2>
+            <div class="form-edit-container">
+                <!-- Formulário de Serviços -->
+                <form (ngSubmit)="addOrUpdateService()" class="form-container">
+                    <div class="form-group">
+                        <label for="serviceName">Nome do Serviço:</label>
+                        <input type="text" id="serviceName" [(ngModel)]="serviceForm.name" name="serviceName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="servicePrice">Preço:</label>
+                        <input type="number" id="servicePrice" [(ngModel)]="serviceForm.price" name="servicePrice" required />
+                    </div>
+                    <div class="form-group toggle-container">
+                        <label for="serviceGeneric" class="toggle-label">Serviço Geral:</label>
+                        <label class="toggle">
+                            <input type="checkbox" id="serviceGeneric" [(ngModel)]="serviceForm.is_generic" name="serviceGeneric" (change)="toggleGenericService()" />
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="form-group" *ngIf="!serviceForm.is_generic">
+                        <label for="serviceEmployees">Funcionários:</label>
+                        <select id="serviceEmployees" [(ngModel)]="serviceForm.employee_ids" name="serviceEmployees" multiple>
+                            <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" *ngIf="!editingService">Adicionar Serviço</button>
+                        <div *ngIf="editingService" class="edit-actions">
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                            <button type="button" class="btn btn-secondary" (click)="cancelEditingService()">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Tabela de Serviços -->
+                <div class="service-list-container">
+                    <table class="table" *ngIf="services.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Nome do Serviço</th>
+                                <th>Preço</th>
+                                <th>Tipo</th>
+                                <th>Funcionários</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let service of services">
+                                <td>{{ service.name }}</td>
+                                <td>R$ {{ service.price }}</td>
+                                <td>{{ service.is_generic ? 'Genérico' : 'Específico' }}</td>
+                                <td>
+                                    <ul *ngIf="service.assigned_employees.length > 0">
+                                        <li *ngFor="let employee of service.assigned_employees">
+                                            {{ employee.employee_name }}
+                                        </li>
+                                    </ul>
+                                    <span *ngIf="service.assigned_employees.length === 0">-</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-warning" (click)="editService(service)">Editar</button>
+                                    <button class="btn btn-danger" (click)="deleteService(service.service_id)">Remover</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p *ngIf="services.length === 0" class="no-data-message">
+                        Nenhum serviço cadastrado.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

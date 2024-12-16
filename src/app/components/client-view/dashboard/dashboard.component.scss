@@ -1,0 +1,171 @@
+.dashboard-header {
+  position: fixed; /* Fixa o cabeçalho no topo */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Garante que fique acima de outros elementos */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary-color); /* Cor principal */
+  color: var(--text-color); /* Cor do texto */
+  padding: 10px 20px 10px 15px;
+  border-bottom: 3px solid var(--highlight-color); /* Cor de destaque */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.dashboard-content {
+  margin-top: 60px; /* Espaço para o cabeçalho fixo */
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease;
+  background-color: var(--background-color); /* Fundo */
+}
+
+.margin-left-250 {
+  margin-left: 230px;
+}
+
+.margin-left-50 {
+  margin-left: 90px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  height: calc(100vh - 50px);
+  background-color: var(--secondary-color); /* Cor secundária */
+  color: var(--text-color); /* Texto */
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  width: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center; /* Centraliza o ícone e texto */
+  flex-direction: column; /* Coloca o texto abaixo do ícone */
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  text-decoration: none;
+  color: var(--text-color); /* Texto */
+  padding: 15px 20px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar.collapsed ul li a {
+  flex-direction: column; /* Alinha ícone e texto verticalmente */
+  padding: 10px 5px; /* Ajusta o padding para caber no design */
+}
+
+.sidebar ul li a i {
+  margin-right: 10px;
+  font-size: 18px;
+  color: var(--primary-color); /* Ícone */
+}
+
+.sidebar.collapsed ul li a i {
+  margin-right: 0; /* Remove o espaçamento horizontal */
+  max-width: 50px;
+}
+
+.collapsed-label {
+  font-size: 10px;
+  margin-top: 5px; /* Espaço entre o ícone e o texto */
+  text-align: center;
+
+  /* Truncar texto longo com reticências */
+  white-space: nowrap; /* Impede quebra de linha */
+  overflow: hidden; /* Esconde texto que ultrapassa o container */
+  text-overflow: ellipsis; /* Adiciona reticências ao texto longo */
+}
+
+.submenu {
+  background-color: var(--background-color); /* Fundo */
+  margin-left: 15px;
+  list-style-type: none;
+  transition: max-height 0.3s ease;
+}
+
+.submenu li a {
+  padding: 10px;
+  font-weight: normal;
+  color: var(--text-color); /* Texto */
+}
+
+.submenu-icon {
+  margin-left: auto;
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.submenu-icon.open {
+  transform: rotate(180deg);
+}
+
+.toggle-sidebar-btn {
+  position: absolute;
+  top: 10px;
+  right: -25px;
+  background-color: var(--primary-color); /* Cor principal */
+  border: none;
+  color: var(--secondary-color); /* Contraste com o fundo */
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Sombra leve */
+}
+
+.toggle-sidebar-btn i {
+  font-size: 14px;
+  color: var(--secondary-color); /* Ícone */
+}
+
+.logo-container img {
+  width: 30px;
+  mix-blend-mode: lighten;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar.collapsed {
+    width: 0;
+  }
+
+  .dashboard-content {
+    margin-left: 60px;
+  }
+
+  .sidebar.collapsed + .dashboard-content {
+    margin-left: 0;
+  }
+}

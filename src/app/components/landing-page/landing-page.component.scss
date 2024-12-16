@@ -1,0 +1,207 @@
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f1f0f0;
+    /* Fundo Branco */
+    color: #475569;
+    /* Cinza Médio */
+
+    .header {
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 1rem 2rem;
+        background-color: #2c3e50;
+        /* Fundo Branco */
+        border-bottom: 1px solid #e5e7eb;
+        /* Linha sutil */
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+
+        a{
+            color: #fff;
+        }
+        .logo img {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+
+            .menu {
+                display: flex;
+                list-style: none;
+                gap: 1.5rem;
+
+                li a {
+                    text-decoration: none;
+                    color: #fff;
+                    /* Azul Petróleo */
+                    font-weight: bold;
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: #686868;
+                        /* Azul Vibrante */
+                    }
+                }
+            }
+
+            .hamburger-menu {
+                display: none;
+            }
+
+            @media (max-width: 768px) {
+                .menu {
+                    display: none;
+                }
+
+                .hamburger-menu {
+                    display: flex;
+                }
+            }
+        }
+    }
+
+    .main-content {
+        flex: 1;
+        padding: 6rem 2rem;
+
+        .hero {
+            text-align: center;
+            margin: 2rem auto;
+
+            h1 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                color: #2c3e50;
+                /* Azul Petróleo */
+            }
+
+            p {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+                color: #475569;
+                /* Cinza Médio */
+            }
+
+            .cta-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+
+                .primary-button {
+                    background-color: #2c3e50;
+                    /* Azul Vibrante */
+                    color: #ffffff;
+                    /* Texto Branco */
+                    padding: 0.8rem 2rem;
+                    border: none;
+                    border-radius: 8px;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: background-color 0.3s, transform 0.3s;
+
+                    &:hover {
+                        background-color: #151d25;
+                        /* Azul mais escuro */
+                        transform: scale(1.05);
+                    }
+                }
+
+                .secondary-button {
+                    background-color: transparent;
+                    color: #2c3e50;
+                    /* Azul Vibrante */
+                    padding: 0.8rem 2rem;
+                    border: 2px solid #2c3e50;
+                    border-radius: 8px;
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: background-color 0.3s, transform 0.3s;
+
+                    &:hover {
+                        background-color: #171f27;
+                        /* Azul Vibrante */
+                        color: #ffffff;
+                        /* Texto Branco */
+                        transform: scale(1.05);
+                    }
+                }
+            }
+        }
+
+        .features {
+            margin: 4rem auto;
+
+            h2 {
+                font-size: 2.5rem;
+                text-align: center;
+                color: #2c3e50;
+                /* Azul Petróleo */
+                margin-bottom: 2rem;
+            }
+
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+
+                .feature-card {
+                    background-color: #ffffff;
+                    /* Fundo Branco */
+                    border: 1px solid #e5e7eb;
+                    /* Linha sutil */
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    border-radius: 12px;
+                    transition: box-shadow 0.3s;
+
+                    &:hover {
+                        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+                    }
+
+                    mat-card-title {
+                        color: #2c3e50;
+                        /* Azul Petróleo */
+                        font-size: 1.5rem;
+                        font-weight: bold;
+                        text-align: center;
+                    }
+
+                    mat-card-content p {
+                        color: #475569;
+                        /* Cinza Médio */
+                        text-align: center;
+                    }
+
+                    img {
+                        height: 200px;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+    }
+
+    .footer {
+        text-align: center;
+        padding: 1rem;
+        background-color: #f1f5f9;
+        /* Cinza Claro */
+        color: #2c3e50;
+        /* Azul Petróleo */
+
+        p {
+            margin: 0;
+        }
+    }
+}

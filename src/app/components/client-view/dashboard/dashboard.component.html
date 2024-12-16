@@ -1,0 +1,67 @@
+<div class="dashboard">
+    <!-- Cabeçalho -->
+    <header class="dashboard-header">
+        <div class="logo-container">
+            <img src="./../../assets/Logo Marca Auto Mecânica Moderno Vermelho.png" alt="Logo" class="logo" />
+        </div>
+
+        <!-- Botão do Usuário -->
+        <div class="user-menu">
+            <button class="user-btn" (click)="toggleUserMenu()">
+                Usuário &#9662; <!-- Ícone para dropdown -->
+            </button>
+            <div class="dropdown-menu" *ngIf="userMenuOpen">
+                <p>Nome da Empresa</p>
+                <hr />
+                <button (click)="logout()">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-content" [className]="isSidebarCollapsed ? 'margin-left-50' : 'margin-left-250'">
+        <!-- Menu Lateral -->
+        <nav class="sidebar" [class.collapsed]="isSidebarCollapsed">
+            <button class="toggle-sidebar-btn" (click)="toggleSidebar()">
+                <i [class]="isSidebarCollapsed ? 'fas fa-chevron-right' : 'fas fa-chevron-left'"></i>
+            </button>
+            <ul>
+                <li (click)="changeView('home')" class="pointer">
+                    <a>
+                        <i class="fas fa-home"></i>
+                        <span *ngIf="isSidebarCollapsed" class="collapsed-label">Home</span>
+                        <span *ngIf="!isSidebarCollapsed">Home</span>
+                    </a>
+                </li>
+                <li (click)="changeView('schedule')" class="pointer">
+                    <a>
+                        <i class="fas fa-calendar-alt"></i>
+                        <span *ngIf="isSidebarCollapsed" class="collapsed-label">Agenda</span>
+                        <span *ngIf="!isSidebarCollapsed">Agenda</span>
+                    </a>
+                </li>
+                <li (click)="changeView('employee')" class="pointer">
+                    <a>
+                        <i class="fas fa-users"></i>
+                        <span *ngIf="isSidebarCollapsed" class="collapsed-label">Func.</span>
+                        <span *ngIf="!isSidebarCollapsed">Funcionários</span>
+                    </a>
+                </li>
+                <li (click)="changeView('configuration')" class="pointer">
+                    <a>
+                        <i class="fas fa-cogs"></i>
+                        <span *ngIf="isSidebarCollapsed" class="collapsed-label">Config.</span>
+                        <span *ngIf="!isSidebarCollapsed">Configurações</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <app-home-dash *ngIf="currentView === 'home'"></app-home-dash>
+            <app-schedule-dash *ngIf="currentView === 'schedule'"></app-schedule-dash>
+            <app-configuration *ngIf="currentView === 'configuration'"></app-configuration>
+            <app-employees-services *ngIf="currentView === 'employee'"></app-employees-services>
+        </main>
+    </div>
+</div>

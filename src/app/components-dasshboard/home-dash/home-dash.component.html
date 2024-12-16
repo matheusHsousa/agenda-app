@@ -1,0 +1,119 @@
+<!-- Filtros -->
+<div class="container-filter">
+    <div class="filters">
+        <label for="professional">Filtrar por Profissional:</label>
+        <select id="professional" (change)="onProfessionalChange($event)">
+            <option value="all">Todos</option>
+            <option *ngFor="let professional of professionals" [value]="professional.id">
+                {{ professional.name }}
+            </option>
+        </select>
+
+        <label for="period">Selecionar Período:</label>
+        <select id="period" (change)="onPeriodChange($event)">
+            <option value="daily">Dia</option>
+            <option value="weekly">Semana</option>
+            <option value="monthly">Mês</option>
+        </select>
+    </div>
+
+    <div>
+        <button class="btn btn-primary" (click)="openAddAppointmentModal()">Novo Agendamento</button>
+    </div>
+
+</div>
+
+<div class="main-container">
+    <div class="main-container" style="margin: 0;">
+        <div class="appointments-container">
+            <ng-container *ngIf="period === 'monthly' || period === 'weekly'; else dailyView">
+                <div class="appointments-group" *ngFor="let group of groupedAppointments">
+                    <h3>{{ group.date | date: 'fullDate' }}</h3>
+                    <div>
+                        <div *ngFor="let appointment of group.appointments" class="appointment-item">
+                            <div class="appointment-header" (click)="toggleAppointmentDetails(appointment.id)">
+                                <fa-icon [icon]="getStatusIcon(appointment.status)"
+                                    [ngClass]="getAppointmentStatusClass(appointment.status)">
+                                </fa-icon>
+                                <span class="appointment-time">
+                                    {{ appointment.start_time | date: 'shortTime' }}
+                                </span>
+                                <span class="appointment-summary">
+                                    {{ appointment.summary }}
+                                </span>
+                                <fa-icon [icon]="appointment.expanded ? faChevronUp : faChevronDown"
+                                    [ngClass]="{ expanded: appointment.expanded }">
+                                </fa-icon>
+
+                            </div>
+                            <div *ngIf="appointment.expanded" class="appointment-details">
+                                <p><strong>Funcionário:</strong> {{ appointment.employee_name }}</p>
+                                <p><strong>Descrição:</strong> {{ appointment.description }}</p>
+                                <p><strong>Status:</strong> {{ appointment.status }}</p>
+                                <p><strong>Início:</strong> {{ appointment.start_time | date: 'shortTime' }}</p>
+                                <p><strong>Término:</strong> {{ appointment.end_time | date: 'shortTime' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-template #dailyView>
+                <!-- Card de Agendamentos do Dia -->
+                <div class="daily-appointments-card">
+                    <p>{{ selectedDate | date: 'fullDate' }}</p>
+                    <h3>Agendamentos do Dia: </h3>
+                    <div class="appointments-list">
+                        <div *ngFor="let appointment of dailyAppointments" class="appointment-item">
+                            <div class="appointment-header" (click)="toggleAppointmentDetails(appointment.id)">
+                                <fa-icon [icon]="getStatusIcon(appointment.status)"
+                                    [ngClass]="getAppointmentStatusClass(appointment.status)">
+                                </fa-icon>
+                                <span class="appointment-time">
+                                    {{ appointment.start_time | date: 'shortTime' }}
+                                </span>
+                                <span class="appointment-summary">
+                                    {{ appointment.summary }}
+                                </span>
+                                <fa-icon [icon]="appointment.expanded ? faChevronUp : faChevronDown"></fa-icon>
+                            </div>
+                            <div *ngIf="appointment.expanded" class="appointment-details">
+                                <p><strong>Funcionário:</strong> {{ appointment.employee_name }}</p>
+                                <p><strong>Descrição:</strong> {{ appointment.description }}</p>
+                                <p><strong>Status:</strong> {{ appointment.status }}</p>
+                                <p><strong>Início:</strong> {{ appointment.start_time | date: 'shortTime' }}</p>
+                                <p><strong>Término:</strong> {{ appointment.end_time | date: 'shortTime' }}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="dailyAppointments.length === 0" class="no-appointments">
+                            <p>Sem agendamentos para hoje.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </ng-template>
+        </div>
+    </div>
+
+
+    <!-- Calendário Grande -->
+    <div class="calendar-container" *ngIf="period === 'daily'">
+        <div class="monthly-calendar">
+            <h3>Calendário</h3>
+            <div class="calendar-navigation">
+                <button (click)="prevMonth()">&#8249;</button>
+                <span>{{ currentMonth | date: 'MMMM yyyy' }}</span>
+                <button (click)="nextMonth()">&#8250;</button>
+            </div>
+            <div class="calendar-grid">
+                <!-- Cabeçalho com dias da semana -->
+                <div class="calendar-day header" *ngFor="let day of weekDays">{{ day }}</div>
+                <!-- Dias do mês -->
+                <div class="calendar-day" *ngFor="let day of calendarDays" [ngClass]="getRemainingTimeClass(day)"
+                    (click)="onDayClick(day)">
+                    <span class="date">{{ day.date | date: 'd' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

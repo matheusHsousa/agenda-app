@@ -1,0 +1,78 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f7f9fc;
+  }
+  
+  .login-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    animation: fadeIn 0.5s ease-in-out;
+  
+    h2 {
+      color: #333333;
+      margin-bottom: 0.5rem;
+    }
+  
+    p {
+      color: #666666;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    .google-login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+  
+      img {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+      }
+  
+      &:hover {
+        background-color: #357ae8;
+      }
+  
+      &:disabled {
+        background-color: #d0d0d0;
+        cursor: not-allowed;
+      }
+    }
+  
+    .error-message {
+      color: #d9534f;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

@@ -1,0 +1,322 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 80px;
+    width: 100%; /* O contêiner principal ocupa 100% */
+    height: calc(100vh - 80px); /* Ocupa toda a altura da tela menos o topo */
+    overflow: hidden; /* Evita scroll na página principal */
+
+    .tabs-container {
+        display: flex;
+        justify-content: start;
+        border-bottom: none; /* Remove a linha padrão para personalizar */
+        gap: 5px; /* Espaçamento entre as abas */
+    }
+
+    .nav-tabs {
+        display: flex;
+        justify-content: start;
+        border-bottom: none; /* Remove a linha padrão para personalizar */
+        gap: 5px; /* Espaçamento entre as abas */
+    }
+
+    .nav-item {
+        flex: 0; /* Abas ocupam apenas o espaço necessário */
+    }
+
+    .nav-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--background-color);
+        border: 1px solid var(--primary-color);
+        border-radius: 8px 8px 0 0; /* Bordas arredondadas no topo */
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--primary-color);
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+
+        &.active {
+            background: var(--secondary-color);
+            color: var(--highlight-color);
+            font-weight: 600;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid var(--secondary-color); /* Esconde o contorno inferior da aba ativa */
+        }
+
+        &:hover {
+            background: var(--secondary-color);
+            color: var(--highlight-color);
+        }
+    }
+
+    .tab-content {
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: 100%; /* Faz o contêiner ocupar toda a altura restante */
+        overflow-y: auto; /* Adiciona scroll vertical ao conteúdo da aba */
+        flex: 1; /* Ajusta dinamicamente a altura com base no espaço restante */
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Contêiner para o formulário e a lista */
+        .form-edit-container {
+            display: flex; /* Alinha lado a lado */
+            gap: 30px;
+            align-items: flex-start;
+            width: 100%;
+            height: auto; /* Ajusta dinamicamente a altura */
+        }
+
+        .form-container {
+            flex: 1; /* O formulário ocupa metade do espaço */
+            min-width: 300px; /* Largura mínima para telas pequenas */
+            max-width: 50%; /* Não ultrapassa 50% da largura */
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Espaçamento interno */
+        }
+
+        .edit-container {
+            flex: 1; /* A lista ocupa metade do espaço */
+            max-width: 50%; /* Não ultrapassa 50% da largura */
+            overflow-y: auto; /* Scroll vertical interno */
+            max-height: calc(100vh - 200px); /* Limita a altura para caber na tela */
+            padding: 10px;
+            background-color: var(--background-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Espaçamento entre os itens */
+        }
+
+        /* Estilo específico para lista de serviços */
+        .service-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px; /* Espaçamento entre os cards */
+        }
+
+        .service-card {
+            background: var(--secondary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .service-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-details {
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            line-height: 1.4;
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .employee-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+
+            .employee-badge {
+                background: var(--background-color);
+                border: 1px solid var(--primary-color);
+                border-radius: 4px;
+                padding: 5px 10px;
+                font-size: 0.85rem;
+                color: var(--primary-color);
+            }
+        }
+    }
+
+    /* Estilo para formulários */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%; /* O formulário ocupa toda a largura disponível */
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            label {
+                color: var(--primary-color);
+                font-weight: 500;
+            }
+
+            input,
+            select {
+                border: 1px solid var(--primary-color);
+                border-radius: 6px;
+                padding: 10px;
+                font-size: 0.95rem;
+                background-color: var(--background-color);
+                width: 100%; /* Campos ocupam 100% */
+            }
+
+            input:focus,
+            select:focus {
+                outline: none;
+                border-color: var(--highlight-color);
+                box-shadow: 0 0 4px var(--highlight-color);
+            }
+        }
+    }
+
+    /* Estilo para botões */
+    button {
+        border: none;
+        border-radius: 6px;
+        padding: 10px 15px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        width: fit-content; /* Botões ajustam à largura do texto */
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        &.btn-primary {
+            background-color: var(--primary-color);
+            color: var(--secondary-text);
+            &:hover {
+                background-color: var(--highlight-color);
+                color: var(--secondary-text);
+            }
+        }
+
+        &.btn-success {
+            background-color: var(--primary-color);
+            color: var(--secondary-text);
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+
+        &.btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            &:hover {
+                background-color: var(--highlight-color);
+                color: var(--secondary-text);
+            }
+        }
+
+        &.btn-danger {
+            background-color: var(--danger-color);
+            color: var(--secondary-text);
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+
+        &.btn-warning {
+            background-color: var(--warning-color);
+            color: var(--text-color);
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+    }
+}
+
+.toggle-container {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 10px; /* Espaço entre o toggle e o texto */
+}
+
+.toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* Largura do toggle */
+    height: 24px; /* Altura do toggle */
+}
+
+.toggle input {
+    opacity: 0; /* Esconde o checkbox padrão */
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--primary-color); /* Cor de fundo quando desmarcado */
+    border: 1px solid var(--primary-color);
+    border-radius: 34px; /* Forma arredondada */
+    transition: all 0.4s ease; /* Transição suave */
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3px;
+    background-color: var(--background-color); /* Cor do botão */
+    border-radius: 50%;
+    transition: all 0.4s ease; /* Transição suave */
+}
+
+input:checked + .slider {
+    background-color: var(--highlight-color); /* Cor de fundo quando ativado */
+    border-color: var(--highlight-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px); /* Move o botão para a direita */
+}
+
+.no-data-message {
+    font-size: 1rem;
+    color: var(--primary-color);
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.edit-actions{
+    display: flex;
+    gap: 20px;
+}
+

@@ -1,0 +1,150 @@
+.agenda-container {
+  overflow-x: auto;
+  margin: 100px 15px 10px 10px;
+}
+
+.agenda-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.agenda-table th,
+.agenda-table td {
+  border: 1px solid var(--secondary-color);
+  padding: 10px;
+  text-align: center;
+}
+
+.agenda-table th {
+  background-color: var(--secondary-color);
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.agenda-cell {
+  cursor: pointer;
+  height: 50px;
+  position: relative;
+  background-color: var(--background-color);
+}
+
+.agenda-cell:hover {
+  background-color: var(--secondary-color);
+}
+
+.time-slot {
+  background-color: var(--secondary-color);
+  font-weight: bold;
+  text-align: center;
+}
+
+.appointment {
+  background-color: var(--highlight-color); /* Cor de destaque */
+  color: var(--text-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Novo estilo para o filter-container */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.filter-container label {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-right: 10px;
+}
+
+.filter-container select,
+.filter-container input[type="date"] {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.filter-container select:hover,
+.filter-container input[type="date"]:hover {
+  border-color: var(--primary-color);
+}
+
+.filter-container select:focus,
+.filter-container input[type="date"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px rgba(255, 21, 77, 0.4);
+}
+
+.week-navigation {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.week-navigation button {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.week-navigation button:hover {
+  background-color: var(--highlight-color);
+  transform: scale(1.05);
+}
+
+.week-navigation span {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.calendar-picker label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+
+.calendar-picker input[type="date"] {
+  display: block;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid var(--primary-color);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.calendar-picker input[type="date"]:hover {
+  border-color: var(--primary-color);
+}
+
+.calendar-picker input[type="date"]:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px rgba(255, 21, 77, 0.4);
+}

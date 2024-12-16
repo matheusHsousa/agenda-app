@@ -1,0 +1,70 @@
+<div class="landing-container">
+    <header class="header">
+        <div class="logo">
+            <img src="../../../assets/Logo Marca Auto Mecânica Moderno Vermelho.png" alt="Agenda Fácil Logo" style="mix-blend-mode: lighten;"/>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a routerLink="/login">Entrar</a></li>
+                <li><a routerLink="/dashboard">Dashboard</a></li>
+            </ul>
+            <button mat-icon-button class="hamburger-menu" [matMenuTriggerFor]="menu">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item routerLink="/login">
+                    <mat-icon>login</mat-icon>
+                    Entrar
+                </button>
+                <button mat-menu-item routerLink="/dashboard">
+                    <mat-icon>dashboard</mat-icon>
+                    Dashboard
+                </button>
+            </mat-menu>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <h1>Agenda Fácil</h1>
+            <p>Transforme o gerenciamento de agendamentos com simplicidade e eficiência.</p>
+            <div class="cta-buttons">
+                <button routerLink="/login" class="primary-button">Comece Agora</button>
+                <button class="secondary-button">Saiba Mais</button>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Descubra nossos recursos</h2>
+            <div class="features-grid">
+                <mat-card class="feature-card">
+                    <img mat-card-image src="../../../assets/interface.png" alt="Fácil de Usar" />
+                    <mat-card-title>Fácil de Usar</mat-card-title>
+                    <mat-card-content>
+                        <p>Interface simples e intuitiva para gerenciar sua agenda.</p>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="feature-card">
+                    <img mat-card-image src="../../../assets/qrCode.png" alt="QR Code" />
+                    <mat-card-title>QR Code para Agendamentos</mat-card-title>
+                    <mat-card-content>
+                        <p>Permita que seus clientes agendem em um único clique.</p>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="feature-card">
+                    <img mat-card-image src="../../../assets/agendamento.png" alt="Controle Total" />
+                    <mat-card-title>Controle Total</mat-card-title>
+                    <mat-card-content>
+                        <p>Gerencie horários e serviços com facilidade.</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Agenda Fácil. Todos os direitos reservados.</p>
+    </footer>
+</div>

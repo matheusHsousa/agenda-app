@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+:root {
+    --primary-color: #2c3e50;
+    /* Azul petróleo escuro */
+    --secondary-color: #ecf0f1;
+    /* Cinza muito claro */
+    --secondary-text: #fff;
+    --text-color: #000000;
+    /* Preto para máxima legibilidade */
+    --background-color: #ffffff;
+    /* Branco puro */
+    --highlight-color: #a3a3a3;
+    /* Vermelho alaranjado vibrante para chamar atenção */
+    --danger-color: #7e2121;
+}

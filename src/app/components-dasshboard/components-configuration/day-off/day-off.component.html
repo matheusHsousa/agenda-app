@@ -1,0 +1,101 @@
+<div class="time-off-config">
+    <h3>Gestão de Folgas Programadas</h3>
+
+    <!-- Formulário para adicionar nova folga -->
+    <form (ngSubmit)="addTimeOff()" class="mb-4">
+        <div class="row align-items-end">
+            <div class="col-md-4">
+                <label for="timeOffDate" class="form-label">Data Início</label>
+                <input id="timeOffDate" type="date" class="form-control" [(ngModel)]="newTimeOff.time_off_date"
+                    name="time_off_date" required />
+            </div>
+            <div class="col-md-4">
+                <label for="timeOffEndDate" class="form-label">Data Término</label>
+                <input id="timeOffEndDate" type="date" class="form-control" [(ngModel)]="newTimeOff.time_off_end_date"
+                    name="time_off_end_date" />
+            </div>
+            <div class="col-md-3">
+                <label for="timeOffEmployee" class="form-label">Funcionário</label>
+                <select id="timeOffEmployee" class="form-control" [(ngModel)]="newTimeOff.employee_id"
+                    name="employee_id" required>
+                    <option *ngFor="let employee of employees" [value]="employee.id">
+                        {{ employee.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="timeOffType" class="form-label">Tipo de Folga</label>
+                <select id="timeOffType" class="form-control" [(ngModel)]="newTimeOff.type_id"
+                    name="type_id" required>
+                    <option *ngFor="let type of timeOffTypes" [value]="type.id">
+                        {{ type.type_name }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-1 text-end">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Tabela de folgas programadas -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Data Início</th>
+                <th>Data Término</th>
+                <th>Descrição</th>
+                <th>Funcionário</th>
+                <th>Tipo de Folga</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let off of timeOff">
+                <td>
+                    <input type="date" class="form-control" [(ngModel)]="off.time_off_date"
+                        [disabled]="!off.isEditing" />
+                </td>
+                <td>
+                    <input type="date" class="form-control" [(ngModel)]="off.time_off_end_date"
+                        [disabled]="!off.isEditing" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" [(ngModel)]="off.description" [disabled]="!off.isEditing" />
+                </td>
+                <td>
+                    <select class="form-control" [(ngModel)]="off.employee_id" [disabled]="!off.isEditing">
+                        <option *ngFor="let employee of employees" [value]="employee.id">
+                            {{ employee.name }}
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" [(ngModel)]="off.type_id" [disabled]="!off.isEditing">
+                        <option *ngFor="let type of timeOffTypes" [value]="type.id">
+                            {{ type.type_name }}
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <button *ngIf="!off.isEditing" class="btn btn-primary" (click)="off.isEditing = true">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        <button *ngIf="off.isEditing" class="btn btn-success" (click)="saveEdit(off)">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        <button *ngIf="off.isEditing" class="btn btn-secondary" (click)="off.isEditing = false">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <button class="btn btn-danger" (click)="deleteTimeOff(off.id)" *ngIf="!off.isEditing">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

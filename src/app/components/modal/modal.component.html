@@ -1,0 +1,82 @@
+<header>
+    <h3>Agendar</h3>
+    <button mat-icon-button class="btn-close" mat-dialog-close aria-label="Fechar">
+        <mat-icon>close</mat-icon>
+    </button>
+</header>
+
+<div class="modal-content">
+    <section>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="employee" class="form-label">Funcionário:</label>
+                <select id="employee" [(ngModel)]="selectedEmployee" (ngModelChange)="onEmployeeChange()"
+                    class="form-select" [disabled]="employees.length === 0">
+                    <option *ngFor="let employee of employees" [value]="employee.id">
+                        {{ employee.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="service" class="form-label">Serviço:</label>
+                <select id="service" [(ngModel)]="selectedService" (ngModelChange)="onServiceChange()"
+                    class="form-select" [disabled]="!selectedEmployee || services.length === 0">
+                    <option *ngFor="let service of services" [value]="service.id">
+                        {{ service.name }} - {{ service.price | currency:'BRL' }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Campo Data -->
+        <label for="date" class="form-label">Data:</label>
+        <input id="date" type="date" [(ngModel)]="selectedDate" (ngModelChange)="onDateChange()" class="form-input"
+            [min]="minDate" [disabled]="!selectedService" />
+
+        <!-- Campo Descrição -->
+        <div *ngIf="selectedService" class="description-container">
+            <label for="description" class="form-label">Descrição:</label>
+            <textarea id="description" [(ngModel)]="selectedDescription" class="form-input" rows="3"
+                readonly></textarea>
+        </div>
+
+        <!-- Linha para Hora de Início e Fim -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="start-time" class="form-label">Horário de Início:</label>
+                <select id="start-time" [(ngModel)]="selectedStartTime" (change)="scheduleAppointment()"
+                    class="form-select" [disabled]="!selectedDate || startSlots.length === 0">
+                    <option *ngFor="let option of startSlots" [value]="option">
+                        {{ option }}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="end-time" class="form-label">Horário de Fim:</label>
+                <select id="end-time" [(ngModel)]="selectedEndTime" class="form-select"
+                    [disabled]="!selectedStartTime || endSlots.length === 0">
+                    <option *ngFor="let option of endSlots" [value]="option">
+                        {{ option }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="content-btn">
+            <button class="btn-secondary" mat-dialog-close aria-label="Fechar">
+                Cancelar
+            </button>
+            
+            <button (click)="confirmAppointment()" class="btn-secondary"
+                [disabled]="!selectedStartTime || !selectedEndTime">
+                Agendar
+            </button>
+        </div>
+
+        <!-- Mensagem de Nenhum Horário Disponível -->
+        <div *ngIf="startSlots.length === 0 && isDateSelected" class="no-slots">
+            <p>Nenhum horário disponível.</p>
+        </div>
+    </section>
+</div>

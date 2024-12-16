@@ -1,0 +1,111 @@
+<div class="holiday-config">
+    <h3>Configuração de Feriados</h3>
+
+    <!-- Formulário para adicionar novo feriado -->
+    <form (ngSubmit)="addHoliday()" class="mb-4">
+        <div class="row align-items-end">
+            <div class="col-md-4">
+                <label for="holidayDate" class="form-label">Data</label>
+                <input
+                    id="holidayDate"
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="newHoliday.holiday_date"
+                    name="holiday_date"
+                    required
+                />
+            </div>
+            <div class="col-md-6">
+                <label for="holidayDescription" class="form-label">Descrição</label>
+                <input
+                    id="holidayDescription"
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="newHoliday.description"
+                    name="description"
+                    required
+                />
+            </div>
+            <div class="col-md-2 text-end">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-plus"></i> <!-- Ícone de adicionar -->
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Indicador de carregamento -->
+    <div *ngIf="isLoading" class="text-center mb-3">
+        <p>Carregando feriados...</p>
+    </div>
+
+    <!-- Tabela de feriados -->
+    <table *ngIf="!isLoading" class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let holiday of holidays">
+                <td>
+                    <input
+                        type="date"
+                        class="form-control"
+                        [(ngModel)]="holiday.holiday_date"
+                        [disabled]="!holiday.isEditing"
+                    />
+                </td>
+                <td>
+                    <input
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="holiday.description"
+                        [disabled]="!holiday.isEditing"
+                    />
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <!-- Botão Editar -->
+                        <button
+                            *ngIf="!holiday.isEditing"
+                            class="btn btn-primary"
+                            (click)="holiday.isEditing = true"
+                        >
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        
+                        <!-- Botão Salvar -->
+                        <button
+                            *ngIf="holiday.isEditing"
+                            class="btn btn-success"
+                            (click)="saveEdit(holiday)"
+                        >
+                            <i class="fa fa-check"></i>
+                        </button>
+                        
+                        <!-- Botão Cancelar -->
+                        <button
+                            *ngIf="holiday.isEditing"
+                            class="btn btn-secondary"
+                            (click)="holiday.isEditing = false"
+                        >
+                            <i class="fa fa-times"></i>
+                        </button>
+                        
+                        <!-- Botão Excluir -->
+                        <button
+                            class="btn btn-danger"
+                            (click)="deleteHoliday(holiday.id)"
+                            *ngIf="!holiday.isEditing"
+                        >
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
